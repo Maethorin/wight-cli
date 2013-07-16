@@ -22,15 +22,18 @@ tests_require = [
     'sh',
     'factory_boy',
     'coveralls',
-    'pexpect-u'
+    'pexpect-u',
+    'turq'
 ]
 
 setup(
-    name='wight',
+    name='wight-cli',
     version=__version__,
     description='wight is a load testing scheduling and tracking tool.',
     long_description='''
 wight is a load testing scheduling and tracking tool.
+
+This package contains the client part of wight. If your are looking for the whole package, please se at https://pypi.python.org/pypi/wight/
 ''',
     keywords='test testing load performance profile profiling',
     author='Márcio Duarte',
