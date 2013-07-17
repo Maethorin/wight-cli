@@ -18,6 +18,9 @@ acceptance acc a: mongo_test redis kill_app
 setup:
 	@pip install -e .\[tests\]
 
+pip:
+	@python setup.py -q sdist upload
+
 local-login:
 	@wight target-set http://0.0.0.0:2367
 	@wight login
