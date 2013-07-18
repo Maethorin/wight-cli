@@ -15,7 +15,7 @@ from wight.cli.base import WightBaseController
 
 class GetDefaultController(WightBaseController):
     class Meta:
-        label = 'get-default'
+        label = 'default-get'
         stack_on = 'base'
         description = 'Shows the defined default team and/or project.'
         config_defaults = dict()
@@ -24,7 +24,7 @@ class GetDefaultController(WightBaseController):
             (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
         ]
 
-    @controller.expose(hide=False, aliases=["get-default"], help='Shows the defined default team and/or project.')
+    @controller.expose(hide=False, aliases=["default-get"], help='Shows the defined default team and/or project.')
     @WightBaseController.authenticated
     def default(self):
         self.load_conf()
@@ -45,7 +45,7 @@ class GetDefaultController(WightBaseController):
 
 class SetDefaultController(WightBaseController):
     class Meta:
-        label = 'set-default'
+        label = 'default-set'
         stack_on = 'base'
         description = 'Define default team and/or project to be used in subsequent commands.'
         config_defaults = dict()
@@ -56,7 +56,7 @@ class SetDefaultController(WightBaseController):
             (['--project'], dict(help='The name of the project to be used as default', required=False)),
         ]
 
-    @controller.expose(hide=False, aliases=["set-default"], help='Define default team and/or project to be used in subsequent commands.')
+    @controller.expose(hide=False, aliases=["default-set"], help='Define default team and/or project to be used in subsequent commands.')
     @WightBaseController.authenticated
     def default(self):
         self.load_conf()
