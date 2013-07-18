@@ -22,8 +22,8 @@ class CreateProjectController(WightBaseController):
 
         arguments = [
             (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
-            (['--team'], dict(help='Name of the team that owns this project.', required=True)),
-            (['--project'], dict(help='Name of the project.', required=True)),
+            (['project'], dict(help='Name of the project.')),
+            (['--team'], dict(help='Name of the team that owns this project.')),
             (['--repo'], dict(help='Git repository for this project.', required=True)),
         ]
 
@@ -33,6 +33,22 @@ class CreateProjectController(WightBaseController):
         self.load_conf()
         target = self.app.user_data.target
         team_name = self.arguments.team
+        if not team_name and hasattr(self.app.user_data, "team"):
+            team_name = self.app.user_data.team
+
+        if not team_name:
+            self.puterror(
+                """
+A default team was not set and you do not pass one. You can:
+    pass a team using %s--team%s parameter
+    or set a default team with %swight default-set %s--team <team-name>%s command
+                """ % (
+                    self.keyword_color, self.reset_error,
+                    self.commands_color, self.keyword_color, self.reset_error
+                )
+            )
+            return
+
         name = self.arguments.project
         repo = self.arguments.repo
 

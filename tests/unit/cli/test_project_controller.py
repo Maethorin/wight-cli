@@ -8,6 +8,7 @@
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2013 Bernardo Heynemann heynemann@gmail.com
 from uuid import uuid4
+import mock
 
 try:
     from StringIO import StringIO
@@ -33,13 +34,40 @@ class ProjectControllerTestBase(TestCase):
         self.ctrl.app.user_data.token = "token-value"
 
 
+class TestCreateProjectWithoutTeam(ProjectControllerTestBase):
+    def setUp(self):
+        self.project = "project-blah"
+        self.team = "team-blah"
+        self.target = "Target"
+        self.controller_kwargs = {"team": None, "project": self.project, "repo": "repo"}
+        self.controller_class = CreateProjectController
+        super(TestCreateProjectWithoutTeam, self).setUp()
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+                """
+A default team was not set and you do not pass one. You can:
+    pass a team using --team parameter
+    or set a default team with wight default-set --team <team-name> command
+        """)
+
+    @patch.object(CreateProjectController, 'post')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_should_be_possible_create_project_with_default_team(self, mock_stdout, post_mock):
+        response = Mock(status_code=200)
+        post_mock.return_value = response
+        self.ctrl.app.user_data.set_default(team="team-blah")
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            "Created '%s' project in '%s' team at '%s'." % (self.project, self.team, self.target)
+        )
+
+
+
 class TestCreateProjectController(ProjectControllerTestBase):
     def setUp(self):
-        # if not hasattr(self, 'project_id'):
-        #     self.project_id = 0
-        # self.project_id += 1
-
-        # self.team = TeamFactory.create()
         self.controller_kwargs = {"team": "team-awesome", "project": str(uuid4()), "repo": "repo"}
         self.controller_class = CreateProjectController
         super(TestCreateProjectController, self).setUp()
