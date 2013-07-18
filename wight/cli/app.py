@@ -13,6 +13,7 @@ from colorama import init
 
 from wight.cli.base import WightDefaultController
 from wight.cli.auth import AuthController
+from wight.cli.default import SetDefaultController
 from wight.cli.target import TargetSetController, TargetGetController
 from wight.cli.team import CreateTeamController, ShowTeamController, UpdateTeamController, TeamAddUserController, DeleteTeamController, TeamRemoveUserController
 from wight.cli.project import CreateProjectController, UpdateProjectController, DeleteProjectController
@@ -51,6 +52,7 @@ class WightApp(foundation.CementApp):
             ListLoadTestController,
             InstanceLoadTestController,
             ShowResultController,
+            SetDefaultController,
         ]
 
         for controller in self.controllers:

@@ -52,8 +52,8 @@ class SetDefaultController(WightBaseController):
 
         arguments = [
             (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
-            (['team'], dict(help='The name of the team to be used as default')),
-            (['project'], dict(help='The name of the project to be used as default')),
+            (['--team'], dict(help='The name of the team to be used as default', required=False)),
+            (['--project'], dict(help='The name of the project to be used as default', required=False)),
         ]
 
     @controller.expose(hide=False, aliases=["set-default"], help='Define default team and/or project to be used in subsequent commands.')
@@ -64,3 +64,16 @@ class SetDefaultController(WightBaseController):
         project = self.arguments.project
         self.app.user_data.set_default(team=team, project=project)
         self.app.user_data.save()
+
+        team_msg = "Default team not set."
+        project_msg = "Default project not set."
+        if team:
+            team_msg = "Default team set to '%s%s%s'." % (self.keyword_color, team, self.reset_success)
+        if project:
+            project_msg = "Default project set to '%s%s%s'." % (self.keyword_color, project, self.reset_success)
+
+        self.line_break()
+        self.putsuccess(team_msg)
+        self.line_break()
+        self.putsuccess(project_msg)
+        self.line_break()

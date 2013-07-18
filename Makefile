@@ -7,10 +7,8 @@ focus:
 	@rm -rf ~/.wighttest
 	@WIGHT_USERDATA_PATH=~/.wighttest nosetests -a 'focus' -vv --with-yanc -s tests/unit/
 
-acceptance acc a: mongo_test redis kill_app
-	@sleep 3
+acc:
 	@rm -rf ~/.wightacc
-	@python wight/api/server.py --port 2368 --bind 0.0.0.0 --conf ./tests/acceptance/acceptance.conf &
 	@WIGHT_USERDATA_PATH=~/.wightacc nosetests -vv --with-yanc -s tests/acceptance/ --stop
 
 setup:
