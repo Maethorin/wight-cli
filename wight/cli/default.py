@@ -11,7 +11,27 @@
 from cement.core import controller
 
 from wight.cli.base import WightBaseController
-from wight.models import UserData
+
+
+class GetDefaultController(WightBaseController):
+    class Meta:
+        label = 'get-default'
+        stack_on = 'base'
+        description = 'Shows the defined default team and/or project.'
+        config_defaults = dict()
+
+        arguments = [
+            (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
+        ]
+
+    @controller.expose(hide=False, aliases=["get-default"], help='Shows the defined default team and/or project.')
+    @WightBaseController.authenticated
+    def default(self):
+        self.load_conf()
+        user_data = self.app.user_data
+        self.line_break()
+        self.write("Default team is '%s'." % user_data.team)
+        self.line_break()
 
 
 class SetDefaultController(WightBaseController):

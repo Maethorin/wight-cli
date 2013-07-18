@@ -23,13 +23,6 @@ from cement.utils import test
 ROOT_PATH = abspath(join(dirname(__file__), '..'))
 
 
-def focus(*args, **kwargs):
-    def wrap_ob(ob):
-        setattr(ob, 'focus', 1)
-        return ob
-    return wrap_ob
-
-
 class TestCase(test.CementTestCase):
     def clean_calls(self):
         self.calls_made = []

@@ -1,11 +1,9 @@
 test:
-	@sleep 3
 	@rm -rf ~/.wighttest
 	@rm -rf .coverage
 	@coverage2 run --branch `which nosetests` -vv --with-yanc -s tests/unit/
 
-focus: mongo_test redis
-	@sleep 1
+focus:
 	@rm -rf ~/.wighttest
 	@WIGHT_USERDATA_PATH=~/.wighttest nosetests -a 'focus' -vv --with-yanc -s tests/unit/
 

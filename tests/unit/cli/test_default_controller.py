@@ -7,6 +7,8 @@
 # Licensed under the MIT license:
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2013 Bernardo Heynemann heynemann@gmail.com
+import mock
+from nose.plugins.attrib import attr
 
 
 try:
@@ -17,7 +19,7 @@ except ImportError:
 from preggy import expect
 
 from wight.models import UserData
-from wight.cli.set_default import SetDefaultController
+from wight.cli.default import SetDefaultController, GetDefaultController
 
 from tests.unit.base import TestCase
 
@@ -45,17 +47,18 @@ class TestSetDefaultController(TestCase):
         expect(hasattr(ud, "team")).to_be_false()
 
 
-# class TestGetDefaultController(TestCase):
-#
-#     def authenticate(self, ctrl):
-#         ctrl.app.user_data = UserData(target="Target")
-#         ctrl.app.user_data.token = "token-value"
-#
-#     def test_get_default(self):
-#         ctrl = self.make_controller(GetDefaultController, conf=self.fixture_for('test.conf'))
-#         self.authenticate(ctrl)
-#         ctrl.default()
-#         ud = UserData.load()
-#         expect(ud.team).to_equal("team-blah")
-#         expect(hasattr(ud, "project")).to_be_false()
+class TestGetDefaultController(TestCase):
+
+    def authenticate(self, ctrl):
+        ctrl.app.user_data = UserData(target="Target")
+        ctrl.app.user_data.token = "token-value"
+
+    @attr('focus')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_get_default_team(self, mock_stdout):
+        get_ctrl = self.make_controller(GetDefaultController, conf=self.fixture_for('test.conf'))
+        self.authenticate(get_ctrl)
+        get_ctrl.app.user_data.set_default(team="team-blah")
+        get_ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like("Default team is 'team-blah'.")
 
