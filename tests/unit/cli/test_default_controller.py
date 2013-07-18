@@ -53,12 +53,26 @@ class TestGetDefaultController(TestCase):
         ctrl.app.user_data = UserData(target="Target")
         ctrl.app.user_data.token = "token-value"
 
-    @attr('focus')
     @mock.patch('sys.stdout', new_callable=StringIO)
     def test_get_default_team(self, mock_stdout):
         get_ctrl = self.make_controller(GetDefaultController, conf=self.fixture_for('test.conf'))
         self.authenticate(get_ctrl)
         get_ctrl.app.user_data.set_default(team="team-blah")
         get_ctrl.default()
-        expect(mock_stdout.getvalue()).to_be_like("Default team is 'team-blah'.")
+        expect(mock_stdout.getvalue()).to_be_like("Default team is 'team-blah'. Default project not set.")
 
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_get_default_project(self, mock_stdout):
+        get_ctrl = self.make_controller(GetDefaultController, conf=self.fixture_for('test.conf'))
+        self.authenticate(get_ctrl)
+        get_ctrl.app.user_data.set_default(project="project-blah")
+        get_ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like("Default team not set. Default project is 'project-blah'.")
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_get_default_team_and_project(self, mock_stdout):
+        get_ctrl = self.make_controller(GetDefaultController, conf=self.fixture_for('test.conf'))
+        self.authenticate(get_ctrl)
+        get_ctrl.app.user_data.set_default(team="team-blah", project="project-blah")
+        get_ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like("Default team is 'team-blah'. Default project is 'project-blah'.")

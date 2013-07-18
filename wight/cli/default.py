@@ -29,8 +29,17 @@ class GetDefaultController(WightBaseController):
     def default(self):
         self.load_conf()
         user_data = self.app.user_data
+        team_msg = "Default team not set."
+        project_msg = "Default project not set."
+        if hasattr(user_data, 'team'):
+            team_msg = "Default team is '%s%s%s'." % (self.keyword_color, user_data.team, self.reset_success)
+        if hasattr(user_data, 'project'):
+            project_msg = "Default project is '%s%s%s'." % (self.keyword_color, user_data.project, self.reset_success)
+
         self.line_break()
-        self.write("Default team is '%s'." % user_data.team)
+        self.write(team_msg)
+        self.line_break()
+        self.write(project_msg)
         self.line_break()
 
 
