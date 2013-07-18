@@ -16,10 +16,50 @@ from tests.acceptance.base import LocalAcceptanceTest
 
 class TestDefault(LocalAcceptanceTest):
 
+    team = "team-blah"
+    project = "project-blah"
+
     def test_can_set_team(self):
-        team = "team-blah"
-        result = self.execute("set-default", team=team)
-        expected = "Default team set to 'team-blah'. Default project not set."
+        result = self.execute("set-default", team=self.team)
+        expected = "Default team set to '%s'. Default project not set." % self.team
         expect(result).to_be_like(expected)
         ud = UserData.load()
-        expect(ud.team).to_be_like(team)
+        expect(ud.team).to_be_like(self.team)
+
+    def test_can_set_project(self):
+        result = self.execute("set-default", project=self.project)
+        expected = "Default team not set. Default project set to '%s'." % self.project
+        expect(result).to_be_like(expected)
+        ud = UserData.load()
+        expect(ud.project).to_be_like(self.project)
+
+    def test_can_set_team_and_project(self):
+        result = self.execute("set-default", team=self.team, project=self.project)
+        expected = "Default team set to '%s'. Default project set to '%s'." % (self.team, self.project)
+        expect(result).to_be_like(expected)
+        ud = UserData.load()
+        expect(ud.team).to_be_like(self.team)
+        expect(ud.project).to_be_like(self.project)
+
+    def test_get_return_not_set(self):
+        result = self.execute("get-default")
+        expected = "Default team not set. Default project not set."
+        expect(result).to_be_like(expected)
+
+    def test_get_return_team_only(self):
+        self.execute("set-default", team=self.team)
+        result = self.execute("get-default")
+        expected = "Default team is '%s'. Default project not set." % self.team
+        expect(result).to_be_like(expected)
+
+    def test_get_return_project_only(self):
+        self.execute("set-default", project=self.project)
+        result = self.execute("get-default")
+        expected = "Default team not set. Default project is '%s'." % self.project
+        expect(result).to_be_like(expected)
+
+    def test_get_return_team_and_project(self):
+        self.execute("set-default", team=self.team, project=self.project)
+        result = self.execute("get-default")
+        expected = "Default team is '%s'. Default project is '%s'." % (self.team, self.project)
+        expect(result).to_be_like(expected)

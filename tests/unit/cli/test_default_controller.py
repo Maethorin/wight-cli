@@ -82,6 +82,11 @@ class TestGetDefaultController(TestCase):
         self.ctrl.app.user_data.token = "token-value"
 
     @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_get_return_not_set_for_both(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like("Default team not set. Default project not set.")
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
     def test_get_default_team(self, mock_stdout):
         self.ctrl.app.user_data.set_default(team=self.team)
         self.ctrl.default()
