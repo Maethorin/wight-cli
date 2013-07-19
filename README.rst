@@ -61,8 +61,8 @@ default-set
 Arguments:
 
 --blah  show this help message and exit
---blahbleh     toggle debug output
---bl     suppress all output
+--blahbleh  toggle debug output
+--bl  suppress all output
 
 Define default team and/or project to be used in subsequent commands::
 
