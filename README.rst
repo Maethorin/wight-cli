@@ -37,9 +37,9 @@ Commands
 
 Optional arguments for all commands:
 
-* -h, --help    show this help message and exit
-* --debug   toggle debug output
-* --quiet   suppress all output
+-h, --help  show this help message and exit
+--debug     toggle debug output
+--quiet     suppress all output
 
 
 change-password
