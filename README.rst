@@ -88,9 +88,9 @@ project-create
 Arguments
 ^^^^^^^^^
 
-project  *<project-name>* ``positional``, ``required``
---team  *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
---repo  *<git-repository>* ``required``
+* **project**  *<project-name>* ``positional``, ``required``
+* **--team**  *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
+* **--repo**  *<git-repository>* ``required``
 
 Creates a project to a team in the current target::
 
@@ -102,8 +102,8 @@ project-delete
 parameters
 ^^^^^^^^^^
 
-* project <project-name> - positional, required
-* --team <team-name> - required (default team not implemented yet)
+* **project** *<project-name>* - ``positional`` ``required``
+* **--team** *<team-name>* - ``required`` (default team not implemented yet)
 
 Deletes a project::
 
@@ -116,9 +116,9 @@ project-update
 parameters
 ^^^^^^^^^^
 
-* project <project-name> - positional, required
-* --team <team-name> - required (default team not implemented yet)
-* --repo <new-git-repository> - required
+* **project** *<project-name>* ``positional`` ``required``
+* **--team** *<team-name>* ``required`` (default team not implemented yet)
+* **--repo** *<new-git-repository>* ``required``
 
 Updates a project to change its repository::
 
@@ -130,9 +130,9 @@ schedule
 parameters
 ^^^^^^^^^^
 
-* url <load-test-target-url> - positional, required
-* --team <team-name> - not required if has a default team set with :code:`wight default-set` command. Otherwise is required.
-* --project <project-name> - not required if has a default project set with :code:`wight default-set` command. Otherwise is required.
+* **url** *<load-test-target-url>* ``positional`` ``required``
+* **--team** *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
+* **--project** *<project-name>* ``not required`` if has a default project set with :code:`wight default-set` command. Otherwise is ``required``.
 
 Schedules a new load test::
 
