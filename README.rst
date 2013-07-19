@@ -58,8 +58,7 @@ Shows the defined default team and/or project::
 default-set
 -----------
 
-parameters
-^^^^^^^^^^
+Arguments:
 
 --team team-name           not required
 --project project-name     not required
