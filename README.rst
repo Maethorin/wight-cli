@@ -96,7 +96,7 @@ parameters
 ^^^^^^^^^^
 
 * project <project-name> - positional, required
-* --team <team-name> - not required if has a default team set with *wight default-set* command. Otherwise is required.
+* --team <team-name> - not required if has a default team set with :bash:`wight default-set` command. Otherwise is required.
 * --repo <repo-url> - required
 
 Creates a project to a team in the current target::
@@ -138,8 +138,8 @@ parameters
 ^^^^^^^^^^
 
 * url <load-test-target-url> - positional, required
-* --team <team-name> - not required if has a default team set with *wight default-set* command. Otherwise is required.
-* --project <project-name> - not required if has a default project set with *wight default-set* command. Otherwise is required.
+* --team <team-name> - not required if has a default team set with :bash:`wight default-set` command. Otherwise is required.
+* --project <project-name> - not required if has a default project set with :bash:`wight default-set` command. Otherwise is required.
 
 Schedules a new load test::
 
