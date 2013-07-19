@@ -58,13 +58,11 @@ Shows the defined default team and/or project::
 default-set
 -----------
 
-Arguments:
+Arguments
+^^^^^^^^^
 
---team  not required not required not required not required
-                    not required not required not required not required
-                    not required not required not required
---project  not required not required not required not required
-                          not required not required not required
+--team  not required
+--project  not required
 
 Define default team and/or project to be used in subsequent commands::
 
