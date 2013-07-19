@@ -62,8 +62,8 @@ default-set
 parameters
 ^^^^^^^^^^
 
---team <team-name>       not required
---project <project-name> not required
+--team team-name       not required
+--project project-name not required
 
 Define default team and/or project to be used in subsequent commands::
 
