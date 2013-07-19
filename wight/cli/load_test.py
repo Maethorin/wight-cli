@@ -39,8 +39,8 @@ class ScheduleLoadTestController(WightBaseController):
         arguments = [
             (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
             (['--url'], dict(help='The base url to run the load test against', required=True)),
-            (['--team'], dict(help='The name of the team that owns the project to schedule a load test', required=True)),
-            (['--project'], dict(help='The name of the project to schedule a load test', required=True)),
+            (['--team'], dict(help='The name of the team that owns the project to schedule a load test')),
+            (['--project'], dict(help='The name of the project to schedule a load test')),
         ]
 
     @controller.expose(hide=False, aliases=["schedule"], help='Schedules a new load test.')
@@ -48,8 +48,12 @@ class ScheduleLoadTestController(WightBaseController):
     def default(self):
         self.load_conf()
         target = self.app.user_data.target
-        team_name = self.arguments.team
-        project_name = self.arguments.project
+        team_name = self._get_parameter(self.arguments.team, "team")
+        project_name = self._get_parameter(self.arguments.project, "project")
+
+        if not team_name or not project_name:
+            return
+
         base_url = self.arguments.url
 
         log_message = "Scheduled a new load test for project '%s%s%s' in team '%s%s%s' at '%s%s%s' target." % (
@@ -340,8 +344,6 @@ class ShowResultController(WightBaseController):
 
         arguments = [
             (['--conf'], dict(help='Configuration file path.', default=None, required=False)),
-            #(['--team'], dict(help='The name of the team that owns the project load tests', required=True)),
-            #(['--project'], dict(help='The name of the project load tests', required=True)),
             (['load_test_uuid'], dict(help='Load test uuid')),
         ]
 
@@ -439,21 +441,3 @@ class ShowResultController(WightBaseController):
         msg = self.align_right(msg, len(line))
         self.write("%s%s%s" % (self.comment_color, msg, self.reset))
         self.line_break()
-
-        #headers = ['title', 'concurrent users', 'rps', 'p95', 'failed']
-        #keys = ['title', 'concurrent_users', 'requests_per_second', 'p95', 'failed_requests']
-
-        #table = PrettyTable(headers + [''])
-
-        #for result in load_test['results']:
-            #row = []
-            #for index, header in enumerate(headers):
-                #row.append(result[keys[index]])
-            #row.append("%swight show-result %s%s" % (self.commands_color, result['uuid'], self.reset))
-            #table.add_row(row)
-
-        #self.write(table)
-
-        #line = str(table).split('\n')[0]
-
-

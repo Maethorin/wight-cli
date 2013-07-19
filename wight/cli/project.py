@@ -32,21 +32,8 @@ class CreateProjectController(WightBaseController):
     def default(self):
         self.load_conf()
         target = self.app.user_data.target
-        team_name = self.arguments.team
-        if not team_name and hasattr(self.app.user_data, "team"):
-            team_name = self.app.user_data.team
-
+        team_name = self._get_parameter(self.arguments.team, "team")
         if not team_name:
-            self.puterror(
-                """
-A default team was not set and you do not pass one. You can:
-    pass a team using %s--team%s parameter
-    or set a default team with %swight default-set %s--team <team-name>%s command
-                """ % (
-                    self.keyword_color, self.reset_error,
-                    self.commands_color, self.keyword_color, self.reset_error
-                )
-            )
             return
 
         name = self.arguments.project
