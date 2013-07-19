@@ -60,8 +60,9 @@ default-set
 
 Arguments:
 
---team team-name           not required
---project project-name     not required
+-h, --help  show this help message and exit
+--debug     toggle debug output
+--quiet     suppress all output
 
 Define default team and/or project to be used in subsequent commands::
 
