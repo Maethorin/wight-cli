@@ -85,12 +85,12 @@ Log-in to wight (or register if user not found)::
 project-create
 --------------
 
-parameters
-^^^^^^^^^^
+Arguments
+^^^^^^^^^
 
-* project <project-name> - positional, required
-* --team <team-name> - not required if has a default team set with :code:`wight default-set` command. Otherwise is required.
-* --repo <git-repository> - required
+project  *<project-name>* ``positional``, ``required``
+--team  *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
+--repo  *<git-repository>* ``required``
 
 Creates a project to a team in the current target::
 
