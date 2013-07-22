@@ -47,11 +47,11 @@ class TestCreateProjectWithoutTeam(ProjectControllerTestBase):
     def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
         self.ctrl.default()
         expect(mock_stdout.getvalue()).to_be_like(
-                """
+            """
 A default team was not set and you do not pass one. You can:
     pass a team using --team parameter
     or set a default team with wight default-set --team <team-name> command
-        """)
+            """)
 
     @patch.object(CreateProjectController, 'post')
     @mock.patch('sys.stdout', new_callable=StringIO)
@@ -63,7 +63,6 @@ A default team was not set and you do not pass one. You can:
         expect(mock_stdout.getvalue()).to_be_like(
             "Created '%s' project in '%s' team at '%s'." % (self.project, self.team, self.target)
         )
-
 
 
 class TestCreateProjectController(ProjectControllerTestBase):
@@ -128,9 +127,6 @@ class TestCreateProjectController(ProjectControllerTestBase):
 
 class TestUpdateProjectController(ProjectControllerTestBase):
     def setUp(self):
-        # self.team = TeamFactory.create()
-        # TeamFactory.add_projects(self.team, 1)
-        # self.project = self.team.projects[0]
         self.controller_kwargs = {
             "team": "team-awesome",
             "project": "project-awesome",
@@ -192,6 +188,102 @@ class TestUpdateProjectController(ProjectControllerTestBase):
         self.ctrl.default()
         msg = "Updated 'new name' project in 'team-awesome' team at 'Target'."
         expect(write_mock.call_args_list[1][0][0]).to_be_like(msg)
+
+
+class TestUpdateProjectWithoutTeam(ProjectControllerTestBase):
+    def setUp(self):
+        self.project = "project-blah"
+        self.team = "team-blah"
+        self.target = "Target"
+        self.controller_kwargs = {"team": None, "project": self.project, "project_name": "new name", "repo": "repo"}
+        self.controller_class = UpdateProjectController
+        super(TestUpdateProjectWithoutTeam, self).setUp()
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            """
+A default team was not set and you do not pass one. You can:
+    pass a team using --team parameter
+    or set a default team with wight default-set --team <team-name> command
+            """)
+
+    @patch.object(UpdateProjectController, 'put')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_should_be_possible_create_project_with_default_team(self, mock_stdout, put_mock):
+        response = Mock(status_code=200)
+        put_mock.return_value = response
+        self.ctrl.app.user_data.set_default(team=self.team)
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            "Updated 'new name' project in '%s' team at '%s'." % (self.team, self.target)
+        )
+
+
+class TestUpdateProjectWithoutProject(ProjectControllerTestBase):
+    def setUp(self):
+        self.project = "project-blah"
+        self.team = "team-blah"
+        self.target = "Target"
+        self.controller_kwargs = {"team": self.team, "project": None, "project_name": "new name", "repo": "repo"}
+        self.controller_class = UpdateProjectController
+        super(TestUpdateProjectWithoutProject, self).setUp()
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            """
+A default project was not set and you do not pass one. You can:
+    pass a project using --project parameter
+    or set a default project with wight default-set --project <project-name> command
+            """)
+
+    @patch.object(UpdateProjectController, 'put')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_should_be_possible_create_project_with_default_team(self, mock_stdout, put_mock):
+        response = Mock(status_code=200)
+        put_mock.return_value = response
+        self.ctrl.app.user_data.set_default(project=self.project)
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            "Updated 'new name' project in '%s' team at '%s'." % (self.team, self.target)
+        )
+
+
+class TestUpdateProjectWithoutTeamAndProject(ProjectControllerTestBase):
+    def setUp(self):
+        self.project = "project-blah"
+        self.team = "team-blah"
+        self.target = "Target"
+        self.controller_kwargs = {"team": None, "project": None, "project_name": "new name", "repo": "repo"}
+        self.controller_class = UpdateProjectController
+        super(TestUpdateProjectWithoutTeamAndProject, self).setUp()
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            """
+A default team was not set and you do not pass one. You can:
+    pass a team using --team parameter
+    or set a default team with wight default-set --team <team-name> command
+A default project was not set and you do not pass one. You can:
+    pass a project using --project parameter
+    or set a default project with wight default-set --project <project-name> command
+            """)
+
+    @patch.object(UpdateProjectController, 'put')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_should_be_possible_create_project_with_default_team(self, mock_stdout, put_mock):
+        response = Mock(status_code=200)
+        put_mock.return_value = response
+        self.ctrl.app.user_data.set_default(team=self.team, project=self.project)
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            "Updated 'new name' project in '%s' team at '%s'." % (self.team, self.target)
+        )
 
 
 class TestDeleteProjectController(ProjectControllerTestBase):
