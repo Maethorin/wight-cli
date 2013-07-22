@@ -151,7 +151,7 @@ parameters
 ^^^^^^^^^^
 
 * **project** *<project-name>* - ``positional`` ``required``
-* **--team** *<team-name>* - ``required`` (default team not implemented yet)
+* **--team** *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
 
 Deletes a project.
 
