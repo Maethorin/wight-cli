@@ -37,7 +37,7 @@ Commands
 
 Optional arguments for all commands:
 
---conf path configuration file path.
+--conf      path configuration file path
 -h, --help  show this help message and exit
 --debug     toggle debug output
 --quiet     suppress all output
@@ -53,7 +53,7 @@ target-set
 parameters
 ^^^^^^^^^^
 
-* **target* *<api-target-url>* ``positional`` ``required``
+* **target** *<api-target-url>* ``positional`` ``required``
 
 Sets target api use with wight.
 
@@ -68,7 +68,7 @@ team-create
 parameters
 ^^^^^^^^^^
 
-* **team* *<team-name>* ``positional`` ``required``
+* **team** *<team-name>* ``positional`` ``required``
 
 Create a team.
 
@@ -78,7 +78,7 @@ team-show
 parameters
 ^^^^^^^^^^
 
-* **team* *<team-name>* ``positional`` ``required``
+* **team** *<team-name>* ``positional`` ``required``
 
 Show the registered team information. The information include the projects registered for the team.
 
@@ -88,7 +88,7 @@ team-update
 parameters
 ^^^^^^^^^^
 
-* **team* *<team-name>* ``positional`` ``required``
+* **team** *<team-name>* ``positional`` ``required``
 
 Updates a team.
 
@@ -98,7 +98,7 @@ team-delete
 parameters
 ^^^^^^^^^^
 
-* **team* *<team-name>* ``positional`` ``required``
+* **team** *<team-name>* ``positional`` ``required``
 
 Delete a team.
 
@@ -184,7 +184,7 @@ show
 parameters
 ^^^^^^^^^^
 
-* **load_test_uuid* *<uuid>* ``positional`` ``required``
+* **load_test_uuid** *<uuid>* ``positional`` ``required``
 * **--track** ``not required``
 
 Show a specific load test and it status (Scheduled, Running, Finished or Failure).
@@ -197,7 +197,7 @@ show-result
 parameters
 ^^^^^^^^^^
 
-* **load_test_uuid* *<uuid>* ``positional`` ``required``
+* **load_test_uuid** *<uuid>* ``positional`` ``required``
 
 Show a load test result. Will have some data for the test result and a URL to access the report web page for the result.
 
@@ -207,8 +207,8 @@ team-adduser
 parameters
 ^^^^^^^^^^
 
-* **user* *<user-email>* ``positional`` ``required``
-* **--team* *<team-name>*   ``required`` (default team not implemented yet)
+* **user** *<user-email>* ``positional`` ``required``
+* **--team** *<team-name>*   ``required`` (default team not implemented yet)
 
 Adds a user to a team.
 You need to be the team owner or a team member to add another user to the team.
@@ -219,8 +219,8 @@ team-removeuser
 parameters
 ^^^^^^^^^^
 
-* **user* *<user-email>* ``positional`` ``required``
-* **--team* *<team-name>*   ``required`` (default team not implemented yet)
+* **user** *<user-email>* ``positional`` ``required``
+* **--team** *<team-name>*   ``required`` (default team not implemented yet)
 
 Removes a user from a team.
 You need to be the team owner or a team member to remover another user to the team.
@@ -231,7 +231,7 @@ user-info
 parameters
 ^^^^^^^^^^
 
-* **user* *<user-email>* ``positional`` ``required``
+* **user** *<user-email>* ``positional`` ``required``
 
 Shows user info.
 
