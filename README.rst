@@ -42,12 +42,68 @@ Optional arguments for all commands:
 --debug     toggle debug output
 --quiet     suppress all output
 
-change-password
----------------
+target-get
+----------
 
-Change user password::
+Gets the target wight is using currently.
 
-    $ wight change-password
+target-set
+----------
+
+parameters
+^^^^^^^^^^
+
+* **target* *<api-target-url>* ``positional`` ``required``
+
+Sets target for wight to use.
+
+login
+-----
+
+Log-in to wight (or register if user not found)::
+
+    $ wight login
+
+
+team-create
+-----------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
+Create a team.
+
+team-show
+---------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
+Show the registered team information.
+
+team-update
+-----------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
+Updates a team.
+
+team-delete
+-----------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
+Delete a team.
 
 default-get
 -----------
@@ -69,20 +125,6 @@ Define default team and/or project to be used in subsequent commands::
 
     $ wight default-set --team <team-name> --project <project-name>
 
-list
-----
-
-List load tests::
-
-    $ wight list
-
-login
------
-
-Log-in to wight (or register if user not found)::
-
-    $ wight login
-
 project-create
 --------------
 
@@ -96,20 +138,6 @@ Arguments
 Creates a project to a team in the current target::
 
     $ wight project-create <project-name> --team <team-name> --repo <git-repository>
-
-project-delete
---------------
-
-parameters
-^^^^^^^^^^
-
-* **project** *<project-name>* - ``positional`` ``required``
-* **--team** *<team-name>* - ``required`` (default team not implemented yet)
-
-Deletes a project::
-
-    $ wight project-delete <project-name> --team <team-name>
-
 
 project-update
 --------------
@@ -125,6 +153,19 @@ Updates a project to change its repository::
 
     $ wight project-update <project-name> --team <team-name> --repo <new-git-repository>
 
+project-delete
+--------------
+
+parameters
+^^^^^^^^^^
+
+* **project** *<project-name>* - ``positional`` ``required``
+* **--team** *<team-name>* - ``required`` (default team not implemented yet)
+
+Deletes a project::
+
+    $ wight project-delete <project-name> --team <team-name>
+
 schedule
 --------
 
@@ -138,6 +179,14 @@ parameters
 Schedules a new load test::
 
     $ wight schedule <load-test-target-url> --team <team-name> --project <project-name>
+
+list
+----
+
+List load tests::
+
+    $ wight list
+
 
 show
 ----
@@ -161,21 +210,6 @@ parameters
 
 Show load test results.
 
-target-get
-----------
-
-Gets the target wight is using currently.
-
-target-set
-----------
-
-parameters
-^^^^^^^^^^
-
-* **target* *<api-target-url>* ``positional`` ``required``
-
-Sets target for wight to use.
-
 team-adduser
 ------------
 
@@ -186,46 +220,6 @@ parameters
 * **--team* *<team-name>*   ``required`` (default team not implemented yet)
 
 Adds user to a team
-
-team-create
------------
-
-parameters
-^^^^^^^^^^
-
-* **team* *<team-name>* ``positional`` ``required``
-
-Create a team.
-
-team-delete
------------
-
-parameters
-^^^^^^^^^^
-
-* **team* *<team-name>* ``positional`` ``required``
-
-Delete a team.
-
-team-show
----------
-
-parameters
-^^^^^^^^^^
-
-* **team* *<team-name>* ``positional`` ``required``
-
-Show the registered team information.
-
-team-update
------------
-
-parameters
-^^^^^^^^^^
-
-* **team* *<team-name>* ``positional`` ``required``
-
-Updates a team.
 
 team-removeuser
 ---------------
@@ -247,3 +241,11 @@ parameters
 * **user* *<user-email>* ``positional`` ``required``
 
 Shows user info
+
+change-password
+---------------
+
+Change user password::
+
+    $ wight change-password
+
