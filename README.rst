@@ -45,7 +45,7 @@ Optional arguments for all commands:
 target-get
 ----------
 
-Gets the target wight is using currently.
+Gets the target api wight is currently using.
 
 target-set
 ----------
@@ -55,15 +55,12 @@ parameters
 
 * **target* *<api-target-url>* ``positional`` ``required``
 
-Sets target for wight to use.
+Sets target api use with wight.
 
 login
 -----
 
-Log-in to wight (or register if user not found)::
-
-    $ wight login
-
+Log-in to wight (or register if user not found).
 
 team-create
 -----------
@@ -83,7 +80,7 @@ parameters
 
 * **team* *<team-name>* ``positional`` ``required``
 
-Show the registered team information.
+Show the registered team information. The information include the projects registered for the team.
 
 team-update
 -----------
@@ -110,8 +107,6 @@ default-get
 
 Shows the defined default team and/or project::
 
-    $ wight default-get
-
 default-set
 -----------
 
@@ -121,9 +116,7 @@ Arguments
 * **--team** *<team-name>* ``not required``
 * **--project** *<project-name>* ``not required``
 
-Define default team and/or project to be used in subsequent commands::
-
-    $ wight default-set --team <team-name> --project <project-name>
+Define default team and/or project to be used in subsequent commands.
 
 project-create
 --------------
@@ -135,9 +128,7 @@ Arguments
 * **--team**  *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
 * **--repo**  *<git-repository>* ``required``
 
-Creates a project to a team in the current target::
-
-    $ wight project-create <project-name> --team <team-name> --repo <git-repository>
+Creates a project to a team in the current target.
 
 project-update
 --------------
@@ -149,9 +140,7 @@ parameters
 * **--team** *<team-name>* ``required`` (default team not implemented yet)
 * **--repo** *<new-git-repository>* ``required``
 
-Updates a project to change its repository::
-
-    $ wight project-update <project-name> --team <team-name> --repo <new-git-repository>
+Updates a project to change its repository.
 
 project-delete
 --------------
@@ -162,9 +151,7 @@ parameters
 * **project** *<project-name>* - ``positional`` ``required``
 * **--team** *<team-name>* - ``required`` (default team not implemented yet)
 
-Deletes a project::
-
-    $ wight project-delete <project-name> --team <team-name>
+Deletes a project.
 
 schedule
 --------
@@ -176,17 +163,20 @@ parameters
 * **--team** *<team-name>* ``not required`` if has a default team set with :code:`wight default-set` command. Otherwise is ``required``.
 * **--project** *<project-name>* ``not required`` if has a default project set with :code:`wight default-set` command. Otherwise is ``required``.
 
-Schedules a new load test::
-
-    $ wight schedule <load-test-target-url> --team <team-name> --project <project-name>
+Schedules a new load test.
 
 list
 ----
 
-List load tests::
+parameters
+^^^^^^^^^^
 
-    $ wight list
+* **--team** *<team-name>* - ``required`` if you pass **--project**, otherwise ``not-required``
+* **--project** *<project-name>* - ``not-required``
 
+List the last 3 load tests and its status (Scheduled, Running, Finished or Failure).
+With **--team** will be listed the last 5 load test for each project of that team.
+With **--team** and **--project** will be listed the las 20 load test for the project.
 
 show
 ----
@@ -197,8 +187,9 @@ parameters
 * **load_test_uuid* *<uuid>* ``positional`` ``required``
 * **--track** ``not required``
 
-
-Show load tests
+Show a specific load test and it status (Scheduled, Running, Finished or Failure).
+If you pass **--track**, the command you run, each 5 sec, in loop to keep track for changes.
+If the test finished or fail, the command will stop.
 
 show-result
 -----------
@@ -208,7 +199,7 @@ parameters
 
 * **load_test_uuid* *<uuid>* ``positional`` ``required``
 
-Show load test results.
+Show a load test result. Will have some data for the test result and a URL to access the report web page for the result.
 
 team-adduser
 ------------
@@ -219,7 +210,8 @@ parameters
 * **user* *<user-email>* ``positional`` ``required``
 * **--team* *<team-name>*   ``required`` (default team not implemented yet)
 
-Adds user to a team
+Adds a user to a team.
+You need to be the team owner or a team member to add another user to the team.
 
 team-removeuser
 ---------------
@@ -230,7 +222,8 @@ parameters
 * **user* *<user-email>* ``positional`` ``required``
 * **--team* *<team-name>*   ``required`` (default team not implemented yet)
 
-Removes a user from a team
+Removes a user from a team.
+You need to be the team owner or a team member to remover another user to the team.
 
 user-info
 ---------
@@ -240,12 +233,9 @@ parameters
 
 * **user* *<user-email>* ``positional`` ``required``
 
-Shows user info
+Shows user info.
 
 change-password
 ---------------
 
-Change user password::
-
-    $ wight change-password
-
+Change user password.
