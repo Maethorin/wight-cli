@@ -37,6 +37,7 @@ Commands
 
 Optional arguments for all commands:
 
+--conf path configuration file path.
 -h, --help  show this help message and exit
 --debug     toggle debug output
 --quiet     suppress all output
@@ -141,10 +142,22 @@ Schedules a new load test::
 show
 ----
 
+parameters
+^^^^^^^^^^
+
+* **load_test_uuid* *<uuid>* ``positional`` ``required``
+* **--track** ``not required``
+
+
 Show load tests
 
 show-result
 -----------
+
+parameters
+^^^^^^^^^^
+
+* **load_test_uuid* *<uuid>* ``positional`` ``required``
 
 Show load test results.
 
@@ -156,39 +169,81 @@ Gets the target wight is using currently.
 target-set
 ----------
 
+parameters
+^^^^^^^^^^
+
+* **target* *<api-target-url>* ``positional`` ``required``
+
 Sets target for wight to use.
 
 team-adduser
 ------------
+
+parameters
+^^^^^^^^^^
+
+* **user* *<user-email>* ``positional`` ``required``
+* **--team* *<team-name>*   ``required`` (default team not implemented yet)
 
 Adds user to a team
 
 team-create
 -----------
 
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
 Create a team.
 
 team-delete
 -----------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
 
 Delete a team.
 
 team-show
 ---------
 
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
+
 Show the registered team information.
 
 team-update
 -----------
+
+parameters
+^^^^^^^^^^
+
+* **team* *<team-name>* ``positional`` ``required``
 
 Updates a team.
 
 team-removeuser
 ---------------
 
-Removess user from a team
+parameters
+^^^^^^^^^^
+
+* **user* *<user-email>* ``positional`` ``required``
+* **--team* *<team-name>*   ``required`` (default team not implemented yet)
+
+Removes a user from a team
 
 user-info
 ---------
+
+parameters
+^^^^^^^^^^
+
+* **user* *<user-email>* ``positional`` ``required``
 
 Shows user info
