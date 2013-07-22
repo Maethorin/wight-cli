@@ -149,8 +149,11 @@ class DeleteProjectController(WightBaseController):
     def default(self):
         self.load_conf()
         target = self.app.user_data.target
-        team_name = self.arguments.team
+        team_name = self._get_parameter(self.arguments.team, "team")
         project_name = self.arguments.project
+
+        if not team_name:
+            return
 
         self.line_break()
         self.write(

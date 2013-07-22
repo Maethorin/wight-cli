@@ -288,9 +288,6 @@ A default project was not set and you do not pass one. You can:
 
 class TestDeleteProjectController(ProjectControllerTestBase):
     def setUp(self):
-        # self.team = TeamFactory.create()
-        # TeamFactory.add_projects(self.team, 1)
-        # self.project = self.team.projects[0]
         self.controller_kwargs = {
             "team": "team-awesome",
             "project": "project-awesome",
@@ -352,3 +349,37 @@ class TestDeleteProjectController(ProjectControllerTestBase):
             You are not member of the team for the project 'project-awesome' and cannot delete it.
             """
         )
+
+
+class TestDeleteProjectWithoutTeam(ProjectControllerTestBase):
+    def setUp(self):
+        self.project = "project-blah"
+        self.team = "team-blah"
+        self.target = "Target"
+        self.controller_kwargs = {"team": None, "project": self.project, "project_name": "new name", "repo": "repo"}
+        self.controller_class = DeleteProjectController
+        super(TestDeleteProjectWithoutTeam, self).setUp()
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_must_show_error_message_if_default_team_are_not_set(self, mock_stdout):
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like(
+            """
+A default team was not set and you do not pass one. You can:
+    pass a team using --team parameter
+    or set a default team with wight default-set --team <team-name> command
+            """)
+
+    @patch.object(DeleteProjectController, 'ask_for')
+    @patch.object(DeleteProjectController, 'delete')
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    def test_should_be_possible_create_project_with_default_team(self, mock_stdout, delete_mock, ask_mock):
+        ask_mock.return_value = "y"
+        response = Mock(status_code=200)
+        delete_mock.return_value = response
+        self.ctrl.app.user_data.set_default(team=self.team)
+        self.ctrl.default()
+        expect(mock_stdout.getvalue()).to_be_like("""
+            This operation will delete the project '%s' and all its tests.
+            Deleted '%s' project and tests for team '%s' in '%s' target.
+        """ % (self.project, self.project, self.team, self.target))
