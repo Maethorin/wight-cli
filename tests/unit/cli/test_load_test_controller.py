@@ -149,15 +149,18 @@ class LoadTestControllerTest(LoadTestControllerTestBase):
 
     @patch.object(ScheduleLoadTestController, 'post')
     def test_schedule_test(self, post_mock):
+        self.ctrl.arguments.pressure = "medium"
         self.ctrl.default()
         post_mock.assert_any_call("/teams/nameless/projects/project/load_tests/", {
-            "base_url": "http://www.globo.com"
+            "base_url": "http://www.globo.com",
+            "pressure": "medium"
         })
 
     @patch.object(ScheduleLoadTestController, 'post')
     @patch.object(ScheduleLoadTestController, 'write')
     def test_schedule_test_notifies_user(self, write_mock, post_mock):
         response = Mock(status_code=200)
+        self.ctrl.arguments.pressure = "medium"
         post_mock.return_value = response
         self.ctrl.default()
         msg = "Scheduled a new load test for project 'project' in team 'nameless' at 'Target' target."
@@ -167,6 +170,7 @@ class LoadTestControllerTest(LoadTestControllerTestBase):
     @patch.object(ScheduleLoadTestController, 'write')
     def test_schedule_gets_server_error_and_notify(self, write_mock, post_mock):
         post_mock.side_effect = requests.ConnectionError
+        self.ctrl.arguments.pressure = "medium"
         self.ctrl.default()
         msg = "The server did not respond. Check your connection with the target 'Target'."
         expect(write_mock.call_args_list[1][0][0]).to_be_like(msg)
@@ -175,6 +179,7 @@ class LoadTestControllerTest(LoadTestControllerTestBase):
     @patch.object(ScheduleLoadTestController, 'write')
     def test_schedule_test_when_project_not_found(self, write_mock, post_mock):
         response = Mock(status_code=404)
+        self.ctrl.arguments.pressure = "medium"
         post_mock.return_value = response
         self.ctrl.default()
         msg = "Project or team not found at target 'Target'."
@@ -222,6 +227,7 @@ A default project was not set and you do not pass one. You can:
     def test_should_be_possible_schedule_with_default_team(self, mock_stdout, post_mock):
         response = Mock(status_code=200)
         post_mock.return_value = response
+        self.ctrl.arguments.pressure = "medium"
         self.ctrl.arguments.team = None
         self.ctrl.app.user_data.set_default(team="team-blah")
         self.ctrl.default()
@@ -234,6 +240,7 @@ A default project was not set and you do not pass one. You can:
     def test_should_be_possible_schedule_with_default_project(self, mock_stdout, post_mock):
         response = Mock(status_code=200)
         post_mock.return_value = response
+        self.ctrl.arguments.pressure = "medium"
         self.ctrl.arguments.project = None
         self.ctrl.app.user_data.set_default(project="project-blah")
         self.ctrl.default()
@@ -246,6 +253,7 @@ A default project was not set and you do not pass one. You can:
     def test_should_be_possible_schedule_with_default_team_and_project(self, mock_stdout, post_mock):
         response = Mock(status_code=200)
         post_mock.return_value = response
+        self.ctrl.arguments.pressure = "medium"
         self.ctrl.arguments.team = None
         self.ctrl.arguments.project = None
         self.ctrl.app.user_data.set_default(team="team-blah", project="project-blah")
